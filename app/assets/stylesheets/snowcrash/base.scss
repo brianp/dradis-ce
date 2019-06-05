@@ -312,6 +312,13 @@ body {
 
     .node-header {
 //      height: $breadCrumbHeight;
+
+      // Bit of a hack. I'm sure this could be done cleaner but I had some
+      // issues getting it to work consistently.
+      .dropdown-menu-more {
+        left: auto;
+        right: 0;
+      }
     }
     .breadcrumb {
       margin-bottom: 0;
