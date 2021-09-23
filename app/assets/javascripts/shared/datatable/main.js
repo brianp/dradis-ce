@@ -99,7 +99,14 @@ class DradisDatatable {
             text: '<i class="fa fa-columns mr-1"></i><i class="fa fa-caret-down"></i>',
             titleAttr: 'Choose columns to show',
             className: 'btn',
-            columns: columnVisibleIndexes
+            columns: columnVisibleIndexes,
+            prefixButtons: [
+              { extend :'colvisRestore', text: 'Show All' },
+              {
+                text: 'Hide All',
+                action: this.hideAllColumns.bind(this)
+              }
+            ]
           }
         ]
       },
@@ -175,5 +182,17 @@ class DradisDatatable {
     document.addEventListener('turbolinks:before-cache', function() {
       that.dataTable.destroy();
     });
+  }
+
+  hideAllColumns() {
+    var that = this;
+
+    this.dataTable.columns().header().each(function(th, index) {
+      if (th.dataset.columnVisible == 'false') {
+        that.dataTable.columns(index).visible(true);
+      } else {
+        that.dataTable.columns(index).visible(false);
+      }
+    })
   }
 }
