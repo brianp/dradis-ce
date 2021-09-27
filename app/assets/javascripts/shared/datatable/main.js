@@ -101,7 +101,10 @@ class DradisDatatable {
             className: 'btn',
             columns: columnVisibleIndexes,
             prefixButtons: [
-              { extend :'colvisRestore', text: 'Show All' },
+              {
+                text: 'Show All',
+                action: this.showAllColumns.bind(this)
+              },
               {
                 text: 'Hide All',
                 action: this.hideAllColumns.bind(this)
@@ -188,11 +191,21 @@ class DradisDatatable {
     var that = this;
 
     this.dataTable.columns().header().each(function(th, index) {
+      // Don't hide columns that has data-column-visible="false",
+      // e.g. Checkbox/Action columns
       if (th.dataset.columnVisible == 'false') {
         that.dataTable.columns(index).visible(true);
       } else {
         that.dataTable.columns(index).visible(false);
       }
+    })
+  }
+
+  showAllColumns() {
+    var that = this;
+
+    this.dataTable.columns().header().each(function(th, index) {
+      that.dataTable.columns(index).visible(true);
     })
   }
 }
